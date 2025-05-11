@@ -18,7 +18,7 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const produtosRef = ref(db, "produtos");
 
-alert(app);
+alert('1');
 
 function criarElementoProduto(id, produto) {
   const div = document.createElement("div");
