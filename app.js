@@ -1,4 +1,4 @@
-alert('ok');
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
@@ -16,6 +16,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const produtosRef = ref(db, "produtos");
+
+alert(initializeApp);
 
 function criarElementoProduto(id, produto) {
   const div = document.createElement("div");
