@@ -1,40 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Produto</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Firebase</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
-    <h1>Editar Produto</h1>
-
-    <!-- Formulário para editar nome e preço do produto -->
-    <form id="formProduto">
-        <label for="nomeProduto">Nome do Produto:</label>
-        <input id="nomeProduto" type="text" value="Camisa Básica Masculina"><br><br>
-
-        <label for="precoProduto">Preço do Produto (R$):</label>
-        <input id="precoProduto" type="number" value="59.90" step="0.01"><br><br>
-
-        <button type="button" onclick="salvarAlteracaoProduto()">Salvar Alterações</button>
-    </form>
-
-    <script>
-        function salvarAlteracaoProduto() {
-            // A URL deve ser o caminho correto para o seu servidor
-            fetch('https://seusite.com/baseDropshipping/atualiza_produto.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    id: 'produto1',  // O id do produto que será alterado
-                    nome: document.querySelector('#nomeProduto').value,  // Captura o valor do input do nome
-                    preco: parseFloat(document.querySelector('#precoProduto').value)  // Captura o valor do input do preço
-                })
-            })
-            .then(res => res.text())  // Recebe a resposta do servidor
-            .then(msg => alert(msg))  // Exibe a mensagem de sucesso ou erro
-            .catch(err => console.error(err));  // Exibe erros no console, se houver
-        }
-    </script>
+  <h1>Catálogo de Produtos</h1>
+  <div id="produtos"></div>
+  <script src="firebase.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
