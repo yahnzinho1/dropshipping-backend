@@ -1,0 +1,5 @@
+Link para manipulação dos arquivos no github pages:
+https://github.com/yahnzinho1/dropshipping-backend
+
+Link para acesso ao projeto do github pages
+https://yahnzinho1.github.io/dropshipping-backend/
