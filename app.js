@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import { get, child } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -55,7 +56,14 @@ function criarElementoProduto(id, produto) {
   return div;
 }
 
-alert('1');
+window.onload = () => {
+	
+	  get(child(ref(db), "produtos")).then((snapshot) => {
+    alert("Teste get():" + snapshot.val());
+  }).catch((error) => {
+    console.error("Erro ao buscar dados:", error);
+  });
+  
 // Escuta mudanças no Realtime Database
 onValue(produtosRef, (snapshot) => {
 	alert('2');
@@ -76,3 +84,4 @@ onValue(produtosRef, (snapshot) => {
     container.innerHTML = "<p>Nenhum produto cadastrado.</p>";
   }
 });
+};
