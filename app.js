@@ -56,32 +56,66 @@ function criarElementoProduto(id, produto) {
   return div;
 }
 
-window.onload = () => {
-	
-	  get(child(ref(db), "produtos")).then((snapshot) => {
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaTeste get():", snapshot.val());
-  }).catch((error) => {
-    console.error("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbErro ao buscar dados:", error);
-  });
-  
-// Escuta mudanças no Realtime Database
-onValue(produtosRef, (snapshot) => {
-	alert('2');
-  const container = document.getElementById("produtosContainer");
-  if (!container) {
-    console.error("Elemento com ID 'produtosContainer' não encontrado.");
-    return;
-  }
 
-  container.innerHTML = "";
-  const dados = snapshot.val();
-  if (dados) {
-    for (const id in dados) {
-      const produtoDiv = criarElementoProduto(id, dados[id]);
-      container.appendChild(produtoDiv);
+
+
+window.onload = () => {
+  const container = document.getElementById("produtosContainer");
+
+  // Formulário de novo produto
+  const form = document.createElement("div");
+  form.innerHTML = `
+    <h3>Novo Produto</h3>
+    <input id="novoNome" placeholder="Nome do produto"><br>
+    <input id="novoPreco" type="number" placeholder="Preço"><br>
+    <textarea id="novaDescricao" placeholder="Descrição"></textarea><br>
+    <button id="btnAdicionar">Adicionar Produto</button>
+    <hr>
+  `;
+  document.body.insertBefore(form, container);
+
+  // Ação de adicionar produto
+  document.getElementById("btnAdicionar").onclick = () => {
+    const nome = document.getElementById("novoNome").value.trim();
+    const preco = parseFloat(document.getElementById("novoPreco").value);
+    const descricao = document.getElementById("novaDescricao").value.trim();
+
+    if (!nome || isNaN(preco)) {
+      alert("Preencha corretamente nome e preço.");
+      return;
     }
-  } else {
-    container.innerHTML = "<p>Nenhum produto cadastrado.</p>";
-  }
-});
+
+    const novoProduto = {
+      nome,
+      preco,
+      descricao
+    };
+
+    // Insere no Firebase
+    const novoRef = ref(db, "produtos");
+    import("https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js").then(({ push }) => {
+      push(novoRef, novoProduto)
+        .then(() => alert("Produto adicionado!"))
+        .catch(err => alert("Erro ao adicionar produto: " + err.message));
+    });
+  };
+
+  // Escuta mudanças no Realtime Database
+  onValue(produtosRef, (snapshot) => {
+    if (!container) {
+      console.error("Elemento com ID 'produtosContainer' não encontrado.");
+      return;
+    }
+
+    container.innerHTML = "";
+    const dados = snapshot.val();
+    if (dados) {
+      for (const id in dados) {
+        const produtoDiv = criarElementoProduto(id, dados[id]);
+        container.appendChild(produtoDiv);
+      }
+    } else {
+      container.innerHTML = "<p>Nenhum produto cadastrado.</p>";
+    }
+  });
 };
