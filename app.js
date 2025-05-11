@@ -21,7 +21,6 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const produtosRef = ref(db, "produtos");
 
-alert(app);
 function criarElementoProduto(id, produto) {
   const div = document.createElement("div");
   div.className = "produto";
@@ -37,6 +36,7 @@ function criarElementoProduto(id, produto) {
   const btnSalvar = document.createElement("button");
   btnSalvar.textContent = "Salvar Alterações";
   btnSalvar.onclick = () => {
+	  alert('ok');alert(update);
     update(ref(db, "produtos/" + id), {
       nome: nomeInput.value,
       preco: parseFloat(precoInput.value),
