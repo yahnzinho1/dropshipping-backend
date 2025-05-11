@@ -55,10 +55,9 @@ function criarElementoProduto(id, produto) {
   return div;
 }
 
-alert('1');
+alert('ok');
 // Escuta mudanças no Realtime Database
 onValue(produtosRef, (snapshot) => {
-	alert('2');
   const container = document.getElementById("produtosContainer");
   if (!container) {
     console.error("Elemento com ID 'produtosContainer' não encontrado.");
