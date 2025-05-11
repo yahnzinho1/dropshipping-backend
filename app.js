@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 import { get, child } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+alert('1');
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -57,7 +58,7 @@ function criarElementoProduto(id, produto) {
 }
 
 window.onload = () => {
-	
+	alert('2');
 	  get(child(ref(db), "produtos")).then((snapshot) => {
     alert("Teste get():" + snapshot.val());
   }).catch((error) => {
