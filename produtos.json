@@ -1,0 +1,23 @@
+{
+  "produto1": {
+    "nome": "Camisa Básica Masculina",
+    "preco": 59.90,
+    "descricao": "Camisa 100% algodão, confortável para o dia a dia.",
+    "estoque": 12,
+    "ativo": true
+  },
+  "produto2": {
+    "nome": "Relógio Smartwatch X9",
+    "preco": 229.90,
+    "descricao": "Monitoramento de saúde, notificações, bluetooth.",
+    "estoque": 8,
+    "ativo": true
+  },
+  "produto3": {
+    "nome": "Tênis Esportivo Feminino",
+    "preco": 149.50,
+    "descricao": "Ideal para caminhada e academia. Solado macio.",
+    "estoque": 5,
+    "ativo": false
+  }
+}
