@@ -7,6 +7,7 @@ import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/fireb
 const firebaseConfig = {
   apiKey: "AIzaSyDmkOA4qM-djOhha2_PoIaTGTp08VYpdaE",
   authDomain: "catalogo-dropshipping-b9546.firebaseapp.com",
+  databaseURL: "https://catalogo-dropshipping-b9546-default-rtdb.firebaseio.com",
   projectId: "catalogo-dropshipping-b9546",
   storageBucket: "catalogo-dropshipping-b9546.firebasestorage.app",
   messagingSenderId: "687748267454",
@@ -15,11 +16,11 @@ const firebaseConfig = {
 };
 
 
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const produtosRef = ref(db, "produtos");
 
-alert(app);
 
 function criarElementoProduto(id, produto) {
   const div = document.createElement("div");
