@@ -59,9 +59,9 @@ function criarElementoProduto(id, produto) {
 window.onload = () => {
 	
 	  get(child(ref(db), "produtos")).then((snapshot) => {
-    console.log("Teste get():", snapshot.val());
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaTeste get():", snapshot.val());
   }).catch((error) => {
-    console.error("Erro ao buscar dados:", error);
+    console.error("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbErro ao buscar dados:", error);
   });
   
 // Escuta mudanças no Realtime Database
