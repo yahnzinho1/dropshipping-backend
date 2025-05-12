@@ -270,5 +270,5 @@ async function notificarClienteStatusPedido(email, pedidoId, status) {
 
 
 window.teste = function(){
-	alert('ok');
+	//alert('ok');
 }
