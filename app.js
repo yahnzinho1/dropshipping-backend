@@ -5,22 +5,28 @@ window.myServerBase = "https://yahnzinho1.github.io/";
 window.myProject = myServerBase + "dropshipping-backend/";
  
 // Função para carregar dinamicamente scripts JS externos
-function appendScript(scriptUrl, callback = null) {
-  const script = document.createElement('script');
-  script.src = scriptUrl;
-  script.type = 'text/javascript';
-  script.async = true;
+let mediaEffectsLoaded = false;
+
+function loadMediaEffectsScript(callback) {
+  if (mediaEffectsLoaded) {
+    // Já carregado, só chama a função desejada
+    callback?.();
+    return;
+  }
+
+  const script = document.createElement("script");
+  script.src = "mediaEffectsHandler.js";
+  script.type = "text/javascript";
   script.onload = () => {
-    if (typeof callback === 'function') callback();
+    mediaEffectsLoaded = true;
+    callback?.();
   };
-  script.onerror = () => {
-    console.error('Erro ao carregar o script:', scriptUrl);
-  };
+  script.onerror = () => console.error("Erro ao carregar mediaEffectsHandler.js");
   document.head.appendChild(script);
 }
 
 // Carrega efeitos visuais e de mídia personalizados
-appendScript(myProject + "mediaEffectsHandler.js");
+//appendScript(myProject + "mediaEffectsHandler.js");
 
 
 
@@ -58,11 +64,20 @@ const auth = getAuth(app);
 
 
 
-alert(window.aplicarTemaOuro);
+//alert(window.aplicarTemaOuro);
 // Aplica o tema
 
 //aplicarTema();
-window.aplicarTemaOuro();
+//window.aplicarTemaOuro();
+
+loadMediaEffectsScript(() => {
+  if (typeof aplicarTemaUniversal === "function") {
+    aplicarTemaUniversal();
+  } else {
+    console.error("Função aplicarTemaUniversal não encontrada.");
+  }
+});
+
 
 // Referência ao container
 const container = document.getElementById("produtosContainer");
