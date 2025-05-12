@@ -212,7 +212,6 @@ function adicionarProdutoComServidorFirebase(){
   // Ação de adicionar produto
   document.getElementById("btnAdicionar").onclick = () => {
 adicionarProdutoComServidorFirebase();
-alert('ok');
   };
 
 
