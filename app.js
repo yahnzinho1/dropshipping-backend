@@ -250,11 +250,39 @@ async function fetchPhpFromReplit() {
 
 
 
+function fetchPhpFromReplitComUpTime() {
+  const url = "https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/";
+
+  fetch(url)
+    .then(res => {
+      if (!res.ok) throw new Error("Erro de resposta");
+      return res.text();
+    })
+    .then(data => {
+      alert("Resposta do servidor: " + data);
+    })
+    .catch(err => {
+      console.warn("Servidor pode estar dormindo. Tentando novamente em 5s...");
+      setTimeout(() => {
+        fetch(url)
+          .then(res => res.text())
+          .then(data => alert("Resposta (segunda tentativa): " + data))
+          .catch(erroFinal => {
+            console.error("Erro persistente:", erroFinal);
+            alert("Erro ao tentar conectar ao servidor PHP.");
+          });
+      }, 5000);
+    });
+}
+
+
+
   // Ação de adicionar produto
   document.getElementById("btnAdicionar").onclick = () => {
 //adicionarProdutoComServidorFirebase();
 //adicionarProdutoComServidorInfinityFree();
-fetchPhpFromReplit();
+//fetchPhpFromReplit();
+fetchPhpFromReplitComUpTime();
   };
 
 
