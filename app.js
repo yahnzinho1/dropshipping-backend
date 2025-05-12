@@ -79,6 +79,16 @@ loadMediaEffectsScript("source/mediaEffectsHandler.js", () => {
 });
 
 
+
+loadMediaEffectsScript("source/dropshippingEngine.js", () => {
+  if (typeof teste === "function") {
+    teste();
+  } else {
+    console.error("Função teste não encontrada.");
+  }
+});
+
+
 // Referência ao container
 const container = document.getElementById("produtosContainer");
 
