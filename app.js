@@ -1,6 +1,17 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
-import { getDatabase, ref, onValue, update, push } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  onValue,
+  update,
+  push
+} from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -22,26 +33,44 @@ const auth = getAuth(app);
 // Referência ao container
 const container = document.getElementById("produtosContainer");
 
-// Elementos de login
+// Interface de login/cadastro
 const loginDiv = document.createElement("div");
+loginDiv.style = "max-width: 400px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background: #f9f9f9; text-align: center;";
 loginDiv.innerHTML = `
-  <h3>Login</h3>
-  <input id="email" placeholder="Email"><br>
-  <input id="senha" type="password" placeholder="Senha"><br>
-  <button id="btnLogin">Entrar</button>
-  <hr>
+  <h2>Autenticação</h2>
+  <input id="email" type="email" placeholder="Seu e-mail" style="width: 90%; padding: 10px; margin: 5px;"><br>
+  <input id="senha" type="password" placeholder="Sua senha" style="width: 90%; padding: 10px; margin: 5px;"><br>
+  <button id="btnLogin" style="padding: 10px 20px; margin: 5px;">Entrar</button>
+  <button id="btnCadastro" style="padding: 10px 20px; margin: 5px; background-color: #4CAF50; color: white;">Cadastrar</button>
+  <p id="status" style="color: red;"></p>
 `;
 document.body.prepend(loginDiv);
 
-// Login
+// Lógica de login
 document.getElementById("btnLogin").onclick = () => {
-  const email = document.getElementById("email").value;
-  const senha = document.getElementById("senha").value;
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value.trim();
   signInWithEmailAndPassword(auth, email, senha)
-    .catch(e => alert("Erro ao logar: " + e.message));
+    .catch(e => document.getElementById("status").textContent = "Erro: " + e.message);
 };
 
-// Ao logar com sucesso
+// Lógica de cadastro
+document.getElementById("btnCadastro").onclick = () => {
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value.trim();
+  if (senha.length < 6) {
+    document.getElementById("status").textContent = "A senha deve ter no mínimo 6 caracteres.";
+    return;
+  }
+  createUserWithEmailAndPassword(auth, email, senha)
+    .then(() => {
+      document.getElementById("status").style.color = "green";
+      document.getElementById("status").textContent = "Cadastro realizado com sucesso!";
+    })
+    .catch(e => document.getElementById("status").textContent = "Erro: " + e.message);
+};
+
+// Detecta login automático
 onAuthStateChanged(auth, (user) => {
   if (user) {
     loginDiv.style.display = "none";
@@ -55,6 +84,7 @@ function iniciarApp() {
 
   // Formulário de novo produto
   const form = document.createElement("div");
+  form.style = "margin: 20px; padding: 10px;";
   form.innerHTML = `
     <h3>Novo Produto</h3>
     <input id="novoNome" placeholder="Nome do produto"><br>
@@ -101,6 +131,7 @@ function iniciarApp() {
 function criarElementoProduto(id, produto) {
   const div = document.createElement("div");
   div.className = "produto";
+  div.style = "border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;";
 
   const nomeInput = document.createElement("input");
   nomeInput.value = produto.nome || "";
