@@ -1,3 +1,23 @@
+// Função para carregar dinamicamente scripts JS externos
+function appendScript(scriptUrl, callback = null) {
+  const script = document.createElement('script');
+  script.src = scriptUrl;
+  script.type = 'text/javascript';
+  script.async = true;
+  script.onload = () => {
+    if (typeof callback === 'function') callback();
+  };
+  script.onerror = () => {
+    console.error('Erro ao carregar o script:', scriptUrl);
+  };
+  document.head.appendChild(script);
+}
+
+// Carrega efeitos visuais e de mídia personalizados
+appendScript("https://yahnzinho1.github.io/dropshipping-backend/mediaEffectsHandler.js");
+
+
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import {
   getAuth,
