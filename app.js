@@ -7,7 +7,7 @@ window.myProject = myServerBase + "dropshipping-backend/";
 // Função para carregar dinamicamente scripts JS externos
 let mediaEffectsLoaded = false;
 
-function loadMediaEffectsScript(callback) {
+function loadMediaEffectsScript(script_src, callback) {
   if (mediaEffectsLoaded) {
     // Já carregado, só chama a função desejada
     callback?.();
@@ -15,7 +15,7 @@ function loadMediaEffectsScript(callback) {
   }
 
   const script = document.createElement("script");
-  script.src = "mediaEffectsHandler.js";
+  script.src = script_src;//"source/mediaEffectsHandler.js";
   script.type = "text/javascript";
   script.onload = () => {
     mediaEffectsLoaded = true;
@@ -70,7 +70,7 @@ const auth = getAuth(app);
 //aplicarTema();
 //window.aplicarTemaOuro();
 
-loadMediaEffectsScript(() => {
+loadMediaEffectsScript("source/mediaEffectsHandler.js", () => {
   if (typeof aplicarTemaUniversal === "function") {
     aplicarTemaUniversal();
   } else {
