@@ -1,3 +1,9 @@
+
+
+
+window.myServerBase = "https://yahnzinho1.github.io/";
+window.myProject = myServerBase + "dropshipping-backend/";
+ 
 // Função para carregar dinamicamente scripts JS externos
 function appendScript(scriptUrl, callback = null) {
   const script = document.createElement('script');
@@ -14,7 +20,7 @@ function appendScript(scriptUrl, callback = null) {
 }
 
 // Carrega efeitos visuais e de mídia personalizados
-appendScript("https://yahnzinho1.github.io/dropshipping-backend/mediaEffectsHandler.js");
+appendScript(myProject + "mediaEffectsHandler.js");
 
 
 
