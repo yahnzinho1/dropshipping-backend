@@ -30,6 +30,106 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
 
+//Função que aplica tema universal
+function aplicarTemaUniversal(nomeTema = "neonBlackGold") {
+  let estilo = "";
+
+  if (nomeTema === "neonBlackGold") {
+    estilo = `
+      :root {
+        --gold-neon: #FFD700;
+        --black-deep: #0d0d0d;
+        --rainbow-gradient: 
+          linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet, red);
+      }
+
+      body {
+        background-color: var(--black-deep);
+        color: var(--gold-neon);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
+        animation: rainbowShadow 10s linear infinite;
+      }
+
+      * {
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+      }
+
+      h1, h2, h3, h4, h5, h6, label {
+        color: var(--gold-neon);
+        text-shadow: 0 0 5px var(--gold-neon);
+      }
+
+      input, textarea, select {
+        background-color: #1a1a1a;
+        color: var(--gold-neon);
+        border: 1px solid var(--gold-neon);
+        border-radius: 5px;
+        padding: 10px;
+        width: 100%;
+      }
+
+      button {
+        background-color: var(--gold-neon);
+        color: var(--black-deep);
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 0 10px var(--gold-neon), 0 0 20px var(--gold-neon);
+      }
+
+      button:hover {
+        background-color: #e6b800;
+      }
+
+      .login-container, .form-container, .produto, .card, .container {
+        background-color: #121212;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 0 12px 2px rgba(255, 215, 0, 0.4), 0 0 30px 6px rgba(255, 215, 0, 0.2);
+        margin: 15px auto;
+      }
+
+      @keyframes rainbowShadow {
+        0% { box-shadow: 0 0 15px red; }
+        14% { box-shadow: 0 0 15px orange; }
+        28% { box-shadow: 0 0 15px yellow; }
+        42% { box-shadow: 0 0 15px green; }
+        57% { box-shadow: 0 0 15px cyan; }
+        71% { box-shadow: 0 0 15px blue; }
+        85% { box-shadow: 0 0 15px violet; }
+        100% { box-shadow: 0 0 15px red; }
+      }
+    `;
+  } else {
+    // Tema padrão leve
+    estilo = `
+      body {
+        background-color: #f4f4f4;
+        color: #333;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+    `;
+  }
+
+  const tag = document.createElement("style");
+  tag.innerHTML = estilo;
+  document.head.appendChild(tag);
+}
+
+
+
+
+
+
+
+
 // Função que aplica o tema
 function aplicarTema(tema = "neonBlackGold") {
   const temas = {
@@ -139,7 +239,8 @@ function aplicarTema(tema = "neonBlackGold") {
 
 // Aplica o tema
 
-aplicarTema();
+//aplicarTema();
+aplicarTemaUniversal();
 
 // Referência ao container
 const container = document.getElementById("produtosContainer");
