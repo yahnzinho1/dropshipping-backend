@@ -205,3 +205,57 @@ window.aplicarTemaOuro = function(tema = "neonBlackGold") {
 }
 
 
+//////////////////////////////////////////
+
+window.emitePersonalBipe = function(element, eventType, frequency = null, duration = 0.2, volume = 0.4, waveform = 'sine', variationType = null) {
+  if (!element || !eventType) return;
+
+  // Mapas de variações baseadas no tipo de evento
+  const presets = {
+    notification: { frequency: 880, duration: 0.4, waveform: 'triangle', volume: 0.5 },
+    error:        { frequency: 180, duration: 0.6, waveform: 'sawtooth', volume: 0.7 },
+    click:        { frequency: 400, duration: 0.1, waveform: 'square', volume: 0.4 },
+    contextmenu:  { frequency: 320, duration: 0.12, waveform: 'square', volume: 0.3 },
+    input:        { frequency: 500, duration: 0.05, waveform: 'sine', volume: 0.2 },
+    success:      { frequency: 660, duration: 0.3, waveform: 'triangle', volume: 0.4 },
+    warning:      { frequency: 240, duration: 0.5, waveform: 'sawtooth', volume: 0.6 },
+    hover:        { frequency: 520, duration: 0.08, waveform: 'sine', volume: 0.2 },
+    submit:       { frequency: 740, duration: 0.2, waveform: 'triangle', volume: 0.5 }
+    // Adicione até 50 variações aqui se quiser
+  };
+
+  const context = new (window.AudioContext || window.webkitAudioContext)();
+
+  const playBip = (config) => {
+    const osc = context.createOscillator();
+    const gain = context.createGain();
+
+    osc.type = config.waveform || waveform;
+    osc.frequency.setValueAtTime(config.frequency || frequency || 440, context.currentTime);
+    gain.gain.setValueAtTime(config.volume || volume, context.currentTime);
+
+    osc.connect(gain);
+    gain.connect(context.destination);
+
+    osc.start();
+    osc.stop(context.currentTime + (config.duration || duration));
+  };
+
+  const baseConfig = presets[variationType || eventType] || {
+    frequency: frequency || 440,
+    duration,
+    waveform,
+    volume
+  };
+
+  // Bind no elemento
+  element.addEventListener(eventType, () => playBip(baseConfig));
+}
+/*
+emitePersonalBipe(document.querySelector("#meuBotao"), "click", null, null, null, null, "click");
+emitePersonalBipe(document.querySelector("#notifier"), "customNotifyEvent", null, null, null, null, "notification");
+emitePersonalBipe(document.querySelector("#meuInput"), "invalid", null, null, null, null, "error");
+emitePersonalBipe(document.body, "dblclick", 970, 0.3, 0.6, "sawtooth");
+*/
+
+
