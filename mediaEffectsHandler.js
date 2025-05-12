@@ -1,5 +1,5 @@
 //Função que aplica tema universal
-function aplicarTemaUniversal(nomeTema = "neonBlackGold") {
+window.aplicarTemaUniversal = function(nomeTema = "neonBlackGold") {
   let estilo = "";
 
   if (nomeTema === "neonBlackGold") {
@@ -99,7 +99,7 @@ function aplicarTemaUniversal(nomeTema = "neonBlackGold") {
 
 
 // Função que aplica o tema
-function aplicarTemaOuro(tema = "neonBlackGold") {
+window.aplicarTemaOuro = function(tema = "neonBlackGold") {
   const temas = {
     neonBlackGold: `
       body {

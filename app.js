@@ -59,7 +59,6 @@ const auth = getAuth(app);
 
 
 // Aplica o tema
-
 aplicarTemaOuro();
 //aplicarTemaUniversal();
 
