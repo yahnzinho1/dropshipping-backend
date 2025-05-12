@@ -31,74 +31,115 @@ const db = getDatabase(app);
 const auth = getAuth(app);
 
 // Função que aplica o tema
-function aplicarTema() {
-  const estilo = `
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      color: #333;
-      margin: 0;
-      padding: 0;
-    }
-    .login-container, .produto-container, .form-container {
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 20px;
-      border-radius: 10px;
-      background-color: #fff;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    .login-container h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .input-field {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .button:hover {
-      background-color: #45a049;
-    }
-    .produto {
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      background-color: #fafafa;
-    }
-    .produto input, .produto textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    .status {
-      color: red;
-      font-size: 14px;
-    }
-  `;
+function aplicarTema(tema = "neonBlackGold") {
+  const temas = {
+    neonBlackGold: `
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #000;
+        color: #ffd700;
+        animation: rainbowShadow 5s infinite alternate;
+      }
+
+      @keyframes rainbowShadow {
+        0%   { box-shadow: 0 0 10px red; }
+        20%  { box-shadow: 0 0 10px orange; }
+        40%  { box-shadow: 0 0 10px yellow; }
+        60%  { box-shadow: 0 0 10px green; }
+        80%  { box-shadow: 0 0 10px blue; }
+        100% { box-shadow: 0 0 10px violet; }
+      }
+
+      .login-container, .produto-container, .form-container {
+        max-width: 500px;
+        margin: 30px auto;
+        padding: 20px;
+        border-radius: 15px;
+        background-color: #111;
+        color: #ffd700;
+        border: 2px solid #ffd700;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), 0 0 40px rgba(255, 255, 255, 0.1);
+        animation: rainbowShadow 10s infinite alternate;
+      }
+
+      h2, h3 {
+        color: #ffd700;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+      }
+
+      .input-field {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #ffd700;
+        background-color: #222;
+        color: #ffd700;
+      }
+
+      .button {
+        padding: 12px 20px;
+        background: linear-gradient(to right, #ffcc00, #ffaa00);
+        color: #000;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+        box-shadow: 0 0 10px #ffd700;
+      }
+
+      .button:hover {
+        background: linear-gradient(to right, #ffaa00, #ffcc00);
+        box-shadow: 0 0 20px #ffd700;
+      }
+
+      .produto {
+        border: 1px solid #ffd700;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 10px;
+        background-color: #1a1a1a;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      }
+
+      .produto input, .produto textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #ffd700;
+        background-color: #222;
+        color: #ffd700;
+      }
+
+      .status {
+        color: #ff4444;
+        font-size: 14px;
+      }
+    `
+  };
+
+  let estiloFinal = "";
+
+  if (typeof tema === "string" && temas[tema]) {
+    estiloFinal = temas[tema];
+  } else if (typeof tema === "object") {
+    estiloFinal = tema.css || "";
+  } else {
+    console.warn("Tema não reconhecido.");
+    return;
+  }
+
   const styleTag = document.createElement("style");
-  styleTag.innerHTML = estilo;
+  styleTag.innerHTML = estiloFinal;
   document.head.appendChild(styleTag);
 }
 
+
 // Aplica o tema
-alert('1');
+
 aplicarTema();
-alert('2');
 
 // Referência ao container
 const container = document.getElementById("produtosContainer");
