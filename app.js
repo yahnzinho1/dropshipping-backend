@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
-import { get, child } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+import { getDatabase, ref, onValue, update, push } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
 // Configuração do Firebase
 const firebaseConfig = {
@@ -17,9 +17,87 @@ const firebaseConfig = {
 // Inicializa Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const produtosRef = ref(db, "produtos");
+const auth = getAuth(app);
 
-// Cria elementos HTML para exibir e editar produtos
+// Referência ao container
+const container = document.getElementById("produtosContainer");
+
+// Elementos de login
+const loginDiv = document.createElement("div");
+loginDiv.innerHTML = `
+  <h3>Login</h3>
+  <input id="email" placeholder="Email"><br>
+  <input id="senha" type="password" placeholder="Senha"><br>
+  <button id="btnLogin">Entrar</button>
+  <hr>
+`;
+document.body.prepend(loginDiv);
+
+// Login
+document.getElementById("btnLogin").onclick = () => {
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+  signInWithEmailAndPassword(auth, email, senha)
+    .catch(e => alert("Erro ao logar: " + e.message));
+};
+
+// Ao logar com sucesso
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    loginDiv.style.display = "none";
+    iniciarApp();
+  }
+});
+
+// Função que carrega o app
+function iniciarApp() {
+  const produtosRef = ref(db, "produtos");
+
+  // Formulário de novo produto
+  const form = document.createElement("div");
+  form.innerHTML = `
+    <h3>Novo Produto</h3>
+    <input id="novoNome" placeholder="Nome do produto"><br>
+    <input id="novoPreco" type="number" placeholder="Preço"><br>
+    <textarea id="novaDescricao" placeholder="Descrição"></textarea><br>
+    <button id="btnAdicionar">Adicionar Produto</button>
+    <hr>
+  `;
+  document.body.insertBefore(form, container);
+
+  // Ação de adicionar produto
+  document.getElementById("btnAdicionar").onclick = () => {
+    const nome = document.getElementById("novoNome").value.trim();
+    const preco = parseFloat(document.getElementById("novoPreco").value);
+    const descricao = document.getElementById("novaDescricao").value.trim();
+
+    if (!nome || isNaN(preco)) {
+      alert("Preencha corretamente nome e preço.");
+      return;
+    }
+
+    const novoProduto = { nome, preco, descricao };
+    push(produtosRef, novoProduto)
+      .then(() => alert("Produto adicionado!"))
+      .catch(err => alert("Erro ao adicionar produto: " + err.message));
+  };
+
+  // Escuta mudanças no Realtime Database
+  onValue(produtosRef, (snapshot) => {
+    container.innerHTML = "";
+    const dados = snapshot.val();
+    if (dados) {
+      for (const id in dados) {
+        const div = criarElementoProduto(id, dados[id]);
+        container.appendChild(div);
+      }
+    } else {
+      container.innerHTML = "<p>Nenhum produto cadastrado.</p>";
+    }
+  });
+}
+
+// Criação de elemento produto
 function criarElementoProduto(id, produto) {
   const div = document.createElement("div");
   div.className = "produto";
@@ -55,67 +133,3 @@ function criarElementoProduto(id, produto) {
 
   return div;
 }
-
-
-
-
-window.onload = () => {
-  const container = document.getElementById("produtosContainer");
-
-  // Formulário de novo produto
-  const form = document.createElement("div");
-  form.innerHTML = `
-    <h3>Novo Produto</h3>
-    <input id="novoNome" placeholder="Nome do produto"><br>
-    <input id="novoPreco" type="number" placeholder="Preço"><br>
-    <textarea id="novaDescricao" placeholder="Descrição"></textarea><br>
-    <button id="btnAdicionar">Adicionar Produto</button>
-    <hr>
-  `;
-  document.body.insertBefore(form, container);
-
-  // Ação de adicionar produto
-  document.getElementById("btnAdicionar").onclick = () => {
-    const nome = document.getElementById("novoNome").value.trim();
-    const preco = parseFloat(document.getElementById("novoPreco").value);
-    const descricao = document.getElementById("novaDescricao").value.trim();
-
-    if (!nome || isNaN(preco)) {
-      alert("Preencha corretamente nome e preço.");
-      return;
-    }
-
-    const novoProduto = {
-      nome,
-      preco,
-      descricao
-    };
-
-    // Insere no Firebase
-    const novoRef = ref(db, "produtos");
-    import("https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js").then(({ push }) => {
-      push(novoRef, novoProduto)
-        .then(() => alert("Produto adicionado!"))
-        .catch(err => alert("Erro ao adicionar produto: " + err.message));
-    });
-  };
-
-  // Escuta mudanças no Realtime Database
-  onValue(produtosRef, (snapshot) => {
-    if (!container) {
-      console.error("Elemento com ID 'produtosContainer' não encontrado.");
-      return;
-    }
-
-    container.innerHTML = "";
-    const dados = snapshot.val();
-    if (dados) {
-      for (const id in dados) {
-        const produtoDiv = criarElementoProduto(id, dados[id]);
-        container.appendChild(produtoDiv);
-      }
-    } else {
-      container.innerHTML = "<p>Nenhum produto cadastrado.</p>";
-    }
-  });
-};
