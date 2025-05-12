@@ -58,10 +58,11 @@ const auth = getAuth(app);
 
 
 
+alert('ok');
 // Aplica o tema
-alert(aplicarTemaOuro);
-aplicarTemaOuro();
-//aplicarTemaUniversal();
+
+//aplicarTema();
+aplicarTemaUniversal();
 
 // Referência ao container
 const container = document.getElementById("produtosContainer");
