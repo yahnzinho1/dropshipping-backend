@@ -230,17 +230,18 @@ async function carregarIndexPHPComServidorRepli() {
 
 async function fetchPhpFromReplit() {
     try {
-        const resposta = await fetch("https://seu-usuario.repl.co/index.php"); // use HTTPS
+        const resposta = await fetch("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
         if (!resposta.ok) throw new Error("Erro na resposta do servidor");
 
         const dados = await resposta.json();
         console.log("Resposta do PHP:", dados);
-        alert(dados.mensagem); // exibe o retorno
+        alert(dados.mensagem);
     } catch (erro) {
         console.error("Erro ao buscar do Replit:", erro);
         alert("Falha ao conectar com o servidor PHP.");
     }
 }
+
 
 // Opcional: chame automaticamente ao carregar
 // window.onload = fetchPhpFromReplit;
