@@ -96,7 +96,9 @@ function aplicarTema() {
 }
 
 // Aplica o tema
+alert('1');
 aplicarTema();
+alert('2');
 
 // Referência ao container
 const container = document.getElementById("produtosContainer");
