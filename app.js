@@ -157,7 +157,7 @@ function iniciarApp() {
 
 
 // Função para adicionar produto via PHP Com Servidor Infinityfree
-function adicionarProdutoComInfinityfreeServer(){
+function adicionarProdutoComServidorInfinityFree(){
   const nome = document.getElementById("novoNome").value.trim();
   const preco = parseFloat(document.getElementById("novoPreco").value);
   const descricao = document.getElementById("novaDescricao").value.trim();
@@ -211,7 +211,8 @@ function adicionarProdutoComServidorFirebase(){
 
   // Ação de adicionar produto
   document.getElementById("btnAdicionar").onclick = () => {
-adicionarProdutoComServidorFirebase();
+//adicionarProdutoComServidorFirebase();
+adicionarProdutoComServidorInfinityFree();
   };
 
 
