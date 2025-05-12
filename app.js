@@ -154,9 +154,44 @@ function iniciarApp() {
   `;
   document.body.insertBefore(form, container);
 
-  // Ação de adicionar produto
-  document.getElementById("btnAdicionar").onclick = () => {
-    const nome = document.getElementById("novoNome").value.trim();
+
+
+// Função para adicionar produto via PHP Com Servidor Infinityfree
+function adicionarProdutoComInfinityfreeServer(){
+  const nome = document.getElementById("novoNome").value.trim();
+  const preco = parseFloat(document.getElementById("novoPreco").value);
+  const descricao = document.getElementById("novaDescricao").value.trim();
+
+  if (!nome || isNaN(preco)) {
+    alert("Preencha corretamente nome e preço.");
+    return;
+  }
+
+  // Dados a serem enviados
+  const produto = { nome, preco, descricao };
+
+  // Envia via AJAX para o PHP
+  fetch("https://seu-site.infinityfreeapp.com/addProduct.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: `nome=${encodeURIComponent(produto.nome)}&preco=${encodeURIComponent(produto.preco)}&descricao=${encodeURIComponent(produto.descricao)}`
+  })
+  .then(response => response.text())
+  .then(data => {
+    alert(data);  // Exibe a resposta do PHP
+  })
+  .catch(error => {
+    alert("Erro ao enviar para o servidor PHP: " + error.message);
+  });
+}
+
+
+
+
+function adicionarProdutoComServidorFirebase(){
+	    const nome = document.getElementById("novoNome").value.trim();
     const preco = parseFloat(document.getElementById("novoPreco").value);
     const descricao = document.getElementById("novaDescricao").value.trim();
 
@@ -169,7 +204,19 @@ function iniciarApp() {
     push(produtosRef, novoProduto)
       .then(() => alert("Produto adicionado!"))
       .catch(err => alert("Erro ao adicionar produto: " + err.message));
+}
+
+
+
+
+  // Ação de adicionar produto
+  document.getElementById("btnAdicionar").onclick = () => {
+adicionarProdutoComServidorFirebase();
+alert('ok');
   };
+
+
+
 
   // Escuta mudanças no Realtime Database
   onValue(produtosRef, (snapshot) => {
@@ -184,6 +231,7 @@ function iniciarApp() {
       container.innerHTML = "<p>Nenhum produto cadastrado.</p>";
     }
   });
+  
 }
 
 // Criação de elemento produto
