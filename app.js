@@ -171,7 +171,7 @@ function adicionarProdutoComServidorInfinityFree(){
   const produto = { nome, preco, descricao };
 
   // Envia via AJAX para o PHP
-  fetch("https://seu-site.infinityfreeapp.com/addProduct.php", {
+  fetch("https://servshopp.infinityfreeapp.com/addProduct.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
