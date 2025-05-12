@@ -208,11 +208,52 @@ function adicionarProdutoComServidorFirebase(){
 
 
 
+async function carregarIndexPHPComServidorRepli() {
+  try {
+    const resposta = await fetch("https://SEU_USUARIO.repl.co/index.php", {
+      method: "GET",
+      mode: "cors"
+    });
+
+    if (!resposta.ok) throw new Error("Erro ao acessar o servidor Replit");
+
+    const html = await resposta.text();
+    document.getElementById("areaPHP").innerHTML = html;
+  } catch (erro) {
+    console.error("Erro ao carregar index.php:", erro);
+    document.getElementById("areaPHP").innerHTML = "<p>Erro ao carregar conteúdo PHP.</p>";
+  }
+}
+
+
+
+
+async function fetchPhpFromReplit() {
+    try {
+        const resposta = await fetch("https://seu-usuario.repl.co/index.php"); // use HTTPS
+        if (!resposta.ok) throw new Error("Erro na resposta do servidor");
+
+        const dados = await resposta.json();
+        console.log("Resposta do PHP:", dados);
+        alert(dados.mensagem); // exibe o retorno
+    } catch (erro) {
+        console.error("Erro ao buscar do Replit:", erro);
+        alert("Falha ao conectar com o servidor PHP.");
+    }
+}
+
+// Opcional: chame automaticamente ao carregar
+// window.onload = fetchPhpFromReplit;
+
+
+
+
 
   // Ação de adicionar produto
   document.getElementById("btnAdicionar").onclick = () => {
 //adicionarProdutoComServidorFirebase();
-adicionarProdutoComServidorInfinityFree();
+//adicionarProdutoComServidorInfinityFree();
+fetchPhpFromReplit();
   };
 
 
