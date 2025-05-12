@@ -30,19 +30,87 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
 
+// Função que aplica o tema
+function aplicarTema() {
+  const estilo = `
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .login-container, .produto-container, .form-container {
+      max-width: 500px;
+      margin: 30px auto;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .login-container h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .button:hover {
+      background-color: #45a049;
+    }
+    .produto {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      background-color: #fafafa;
+    }
+    .produto input, .produto textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .status {
+      color: red;
+      font-size: 14px;
+    }
+  `;
+  const styleTag = document.createElement("style");
+  styleTag.innerHTML = estilo;
+  document.head.appendChild(styleTag);
+}
+
+// Aplica o tema
+aplicarTema();
+
 // Referência ao container
 const container = document.getElementById("produtosContainer");
 
 // Interface de login/cadastro
 const loginDiv = document.createElement("div");
-loginDiv.style = "max-width: 400px; margin: 40px auto; padding: 20px; border: 1px solid #ccc; border-radius: 10px; background: #f9f9f9; text-align: center;";
+loginDiv.classList.add("login-container");
 loginDiv.innerHTML = `
   <h2>Autenticação</h2>
-  <input id="email" type="email" placeholder="Seu e-mail" style="width: 90%; padding: 10px; margin: 5px;"><br>
-  <input id="senha" type="password" placeholder="Sua senha" style="width: 90%; padding: 10px; margin: 5px;"><br>
-  <button id="btnLogin" style="padding: 10px 20px; margin: 5px;">Entrar</button>
-  <button id="btnCadastro" style="padding: 10px 20px; margin: 5px; background-color: #4CAF50; color: white;">Cadastrar</button>
-  <p id="status" style="color: red;"></p>
+  <input id="email" type="email" placeholder="Seu e-mail" class="input-field"><br>
+  <input id="senha" type="password" placeholder="Sua senha" class="input-field"><br>
+  <button id="btnLogin" class="button">Entrar</button>
+  <button id="btnCadastro" class="button" style="background-color: #4CAF50;">Cadastrar</button>
+  <p id="status" class="status"></p>
 `;
 document.body.prepend(loginDiv);
 
@@ -84,13 +152,13 @@ function iniciarApp() {
 
   // Formulário de novo produto
   const form = document.createElement("div");
-  form.style = "margin: 20px; padding: 10px;";
+  form.classList.add("form-container");
   form.innerHTML = `
     <h3>Novo Produto</h3>
-    <input id="novoNome" placeholder="Nome do produto"><br>
-    <input id="novoPreco" type="number" placeholder="Preço"><br>
-    <textarea id="novaDescricao" placeholder="Descrição"></textarea><br>
-    <button id="btnAdicionar">Adicionar Produto</button>
+    <input id="novoNome" placeholder="Nome do produto" class="input-field"><br>
+    <input id="novoPreco" type="number" placeholder="Preço" class="input-field"><br>
+    <textarea id="novaDescricao" placeholder="Descrição" class="input-field"></textarea><br>
+    <button id="btnAdicionar" class="button">Adicionar Produto</button>
     <hr>
   `;
   document.body.insertBefore(form, container);
@@ -131,7 +199,6 @@ function iniciarApp() {
 function criarElementoProduto(id, produto) {
   const div = document.createElement("div");
   div.className = "produto";
-  div.style = "border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 5px;";
 
   const nomeInput = document.createElement("input");
   nomeInput.value = produto.nome || "";
@@ -145,6 +212,7 @@ function criarElementoProduto(id, produto) {
 
   const btnSalvar = document.createElement("button");
   btnSalvar.textContent = "Salvar Alterações";
+  btnSalvar.classList.add("button");
   btnSalvar.onclick = () => {
     update(ref(db, "produtos/" + id), {
       nome: nomeInput.value,
