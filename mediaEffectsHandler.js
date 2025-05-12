@@ -204,4 +204,4 @@ window.aplicarTemaOuro = function(tema = "neonBlackGold") {
   document.head.appendChild(styleTag);
 }
 
-alert('qqq');
+
