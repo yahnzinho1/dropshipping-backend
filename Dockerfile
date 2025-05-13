@@ -27,4 +27,4 @@ RUN chown -R www-data:www-data /var/www/html
 
 
 COPY public/ /var/www/html/
-EXPOSE 80
+
