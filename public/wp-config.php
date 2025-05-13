@@ -43,9 +43,9 @@ define('FS_METHOD', 'direct');
 
 
 /** as duas linhas abaixo é para dar prioridade no caminho url predefinido */
-define('WP_HOME', 'https://dropshipping-backend-1-4zzx.onrender.com');
+/** define('WP_HOME', 'https://dropshipping-backend-1-4zzx.onrender.com'); */
 
-define('WP_SITEURL', 'https://dropshipping-backend-1-4zzx.onrender.com');
+/** define('WP_SITEURL', 'https://dropshipping-backend-1-4zzx.onrender.com'); */
 
 
 /**#@+
