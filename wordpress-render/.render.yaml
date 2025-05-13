@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: wordpress-render
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    region: oregon
+    healthCheckPath: /
