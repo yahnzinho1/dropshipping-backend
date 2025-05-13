@@ -228,9 +228,9 @@ async function carregarIndexPHPComServidorRepli() {
 
 
 
-async function fetchPhpFromReplit() {
+async function fetchPhp(url) {
     try {
-        const resposta = await fetch("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
+        const resposta = await fetch(url);
         if (!resposta.ok) throw new Error("Erro na resposta do servidor");
 
         const dados = await resposta.json();
@@ -250,8 +250,7 @@ async function fetchPhpFromReplit() {
 
 
 
-function fetchPhpFromReplitComUpTime() {
-  const url = "https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/";
+function fetchPhpComUpTime(url, delay = 5000) {
 
   fetch(url)
     .then(res => {
@@ -271,9 +270,42 @@ function fetchPhpFromReplitComUpTime() {
             console.error("Erro persistente:", erroFinal);
             alert("Erro ao tentar conectar ao servidor PHP.");
           });
-      }, 5000);
+      }, delay);
     });
 }
+
+
+
+
+
+
+function fetchPersistente(url, tentativas = 3, delay = 3000) {
+  let tentativaAtual = 0;
+
+  function tentarFetch() {
+    tentativaAtual++;
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error("Resposta não OK");
+        return res.text();
+      })
+      .then(data => {
+        alert("Servidor respondeu: " + data);
+      })
+      .catch(err => {
+        if (tentativaAtual < tentativas) {
+          console.log(`Tentativa ${tentativaAtual} falhou. Repetindo em ${delay}ms...`);
+          setTimeout(tentarFetch, delay);
+        } else {
+          alert("Erro: o servidor Replit pode estar dormindo.");
+        }
+      });
+  }
+
+  tentarFetch();
+}
+
+
 
 
 
@@ -281,8 +313,9 @@ function fetchPhpFromReplitComUpTime() {
   document.getElementById("btnAdicionar").onclick = () => {
 //adicionarProdutoComServidorFirebase();
 //adicionarProdutoComServidorInfinityFree();
-//fetchPhpFromReplit();
-fetchPhpFromReplitComUpTime();
+//fetchPhp("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
+//fetchPersistente("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
+fetchPhpComUpTime("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
   };
 
 
