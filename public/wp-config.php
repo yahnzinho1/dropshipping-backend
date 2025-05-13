@@ -17,6 +17,8 @@
  *
  * @package WordPress
  */
+/** Para evitar conteúdo misto */
+$_SERVER['HTTPS'] = 'on';
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
@@ -38,6 +40,12 @@ define( 'DB_CHARSET', 'utf8mb4' );
 define( 'DB_COLLATE', '' );
 
 define('FS_METHOD', 'direct');
+
+
+/** as duas linhas abaixo é para dar prioridade no caminho url predefinido */
+define('WP_HOME', 'https://dropshipping-backend-1-4zzx.onrender.com');
+
+define('WP_SITEURL', 'https://dropshipping-backend-1-4zzx.onrender.com');
 
 
 /**#@+

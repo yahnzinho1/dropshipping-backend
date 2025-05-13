@@ -27,4 +27,8 @@ RUN chown -R www-data:www-data /var/www/html \
  && mkdir -p /var/www/html/wp-content/upgrade \
  && chown -R www-data:www-data /var/www/html/wp-content
 
+# Ajusta permissões para o arquivo .htaccess
+RUN chmod 644 /var/www/html/.htaccess && \
+    chown www-data:www-data /var/www/html/.htaccess
+
 EXPOSE 80
