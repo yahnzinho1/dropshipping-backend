@@ -1,17 +1,19 @@
 <?php
-/**
- * Front to the WordPress application. This file doesn't do anything, but loads
- * wp-blog-header.php which does and tells WordPress to load the theme.
- *
- * @package WordPress
- */
+// Habilita CORS para permitir acesso externo
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json");
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
-/**
- * Tells WordPress to load the WordPress theme and output it.
- *
- * @var bool
- */
-define( 'WP_USE_THEMES', true );
+// Simulação de uma função em PHP
+function minhaFuncaoPhp() {
+    return [
+        "status" => "sucesso",
+        "mensagem" => "Olá do servidor PHP (Render)! Hora: " . date("H:i:s")
+    ];
+}
 
-/** Loads the WordPress Environment and Template */
-require __DIR__ . '/wp-blog-header.php';
+// Envia a resposta JSON
+echo json_encode(minhaFuncaoPhp());
+//echo "Olá do servidor PHP (Replit)! Hora: " . date("H:i:s");
+?>
