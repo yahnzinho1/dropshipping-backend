@@ -9,7 +9,7 @@ header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 function minhaFuncaoPhp() {
     return [
         "status" => "sucesso",
-        "mensagem" => "Olá do servidor PHP (Replit)! Hora: " . date("H:i:s")
+        "mensagem" => "Olá do servidor PHP (Render)! Hora: " . date("H:i:s")
     ];
 }
 
