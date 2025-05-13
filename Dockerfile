@@ -13,12 +13,18 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     default-mysql-client \
     && docker-php-ext-install pdo pdo_mysql mysqli
-	
-	# Habilita mod_rewrite do Apache
+
+# Habilita mod_rewrite do Apache
 RUN a2enmod rewrite
 
-# Ajusta permissões
-RUN chown -R www-data:www-data /var/www/html
-
+# Copia os arquivos da aplicação
 COPY public/ /var/www/html/
+
+# Ajusta permissões e cria diretórios necessários
+RUN chown -R www-data:www-data /var/www/html \
+ && find /var/www/html -type d -exec chmod 755 {} \; \
+ && find /var/www/html -type f -exec chmod 644 {} \; \
+ && mkdir -p /var/www/html/wp-content/upgrade \
+ && chown -R www-data:www-data /var/www/html/wp-content
+
 EXPOSE 80
