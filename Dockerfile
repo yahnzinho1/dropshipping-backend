@@ -1,4 +1,5 @@
-FROM php:8.2-apache
+FROM php:8.1-apache
+
 
 # Instala extensões PHP necessárias
 RUN apt-get update && apt-get install -y \
@@ -23,3 +24,7 @@ COPY . /var/www/html
 
 # Ajusta permissões
 RUN chown -R www-data:www-data /var/www/html
+
+
+COPY public/ /var/www/html/
+EXPOSE 80
