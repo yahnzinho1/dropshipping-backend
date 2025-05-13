@@ -1,7 +1,9 @@
-git init
-git remote add origin https://github.com/mauriciowagnerdev/wordpress-render.git
-git branch -M main
 git add .
-git commit -m "Primeiro commit do WordPress com Docker"
-git push -u origin main
+//Esse abaixocomando adiciona todos os arquivos modificados ou novos para serem incluídos no commit.
+git commit -m "Atualização do projeto: novas alterações e arquivos"
 
+//Esse comando abaixo cria um commit com uma mensagem descritiva.
+git pull origin main --rebase
+
+//Esse comando abaixo sincroniza com a versão remota para evitar conflitos antes de enviar.
+git push origin main
