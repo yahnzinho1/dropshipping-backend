@@ -17,5 +17,8 @@ RUN apt-get update && apt-get install -y \
 	# Habilita mod_rewrite do Apache
 RUN a2enmod rewrite
 
+# Ajusta permissões
+RUN chown -R www-data:www-data /var/www/html
+
 COPY public/ /var/www/html/
 EXPOSE 80
