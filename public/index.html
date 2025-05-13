@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+fetch("https://servshopp.infinityfreeapp.com/addProduct.php", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  body: new URLSearchParams({
+    nome: "Teste",
+    preco: "1.99",
+    descricao: "Produto teste"
+  })
+})
+.then(res => res.text())
+.then(data => alert("SUCESSO: " + data))
+.catch(err => alert("ERRO: " + err));
+</script>
+</body>
+</html>
