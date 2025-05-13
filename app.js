@@ -317,6 +317,8 @@ function fetchPersistente(url, tentativas = 3, delay = 3000) {
 //fetchPersistente("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
 //fetchPhpComUpTime("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
 fetchPhp("https://dropshipping-backend-1-4zzx.onrender.com/");
+///Obs: caso queira chamar outro arquivo php e ele exista dentro da pasta "C:\Users\User\Desktop\IA-Codes\NesteComputador\PHP & HTML\baseDropshipping\public" sendo o arquivo login.php por exemplo é só usar a função com a url abaixo:
+//("https://dropshipping-backend-1-4zzx.onrender.com/login.php")
   };
 
 
