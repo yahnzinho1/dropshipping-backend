@@ -1,10 +1,14 @@
+# Escolha a imagem PHP com Apache
 FROM php:7.4-apache
 
-# Instala e ativa a extensão mysqli
+# Instale a extensão mysqli
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
-# Copia os arquivos do WordPress para o diretório padrão do Apache
+# Copie os arquivos do WordPress para o diretório do Apache
 COPY src/ /var/www/html/
 
-# Expõe a porta padrão do Apache
+# Dê as permissões corretas
+RUN chown -R www-data:www-data /var/www/html
+
+# Exponha a porta usada pelo Apache
 EXPOSE 80
