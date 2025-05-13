@@ -314,8 +314,8 @@ function fetchPersistente(url, tentativas = 3, delay = 3000) {
 //adicionarProdutoComServidorFirebase();
 //adicionarProdutoComServidorInfinityFree();
 //fetchPhp("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
-//fetchPersistente("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
-fetchPhpComUpTime("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
+fetchPersistente("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
+//fetchPhpComUpTime("https://2b6b859c-f7f1-4936-9146-d2fbd2b82917-00-1cq7dbnazpy9n.worf.replit.dev/");
   };
 
 
