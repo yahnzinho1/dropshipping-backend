@@ -1,0 +1,25 @@
+/*
+//Exemplo de importação estando numa função da pasta themes de um tema
+//////////////////////////////////////////////
+
+<?php
+// Caminho absoluto até firebaseFunctions.php
+$basePath = dirname(dirname(dirname(__DIR__))); // Sobe três níveis até "public"
+require_once $basePath . '/firebaseFunctions.php';
+
+add_action('init', function() {
+    $apiKey = 'SUA_FIREBASE_API_KEY';
+    $login = firebaseLogin('email@email.com', 'senha123', $apiKey);
+
+    if (!empty($login['idToken'])) {
+        $data = [
+            'produto' => 'Notebook',
+            'preco' => 3499.99
+        ];
+        $resultado = firebaseInsert('produtos', $data, $login['idToken']);
+        error_log('Produto inserido: ' . print_r($resultado, true));
+    }
+});
+
+//////////////////////////////////////
+*/

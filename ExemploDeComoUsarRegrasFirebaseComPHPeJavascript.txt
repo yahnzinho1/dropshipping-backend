@@ -1,0 +1,108 @@
+////////////////////////com PHP:
+$credentialsJson = file_get_contents("firebase-service-account.json");
+
+$regrasLiberadas = [
+    "rules" => [
+        ".read" => true,
+        ".write" => true
+    ]
+];
+
+$regrasRestritas = [
+    "rules" => [
+        ".read" => "auth != null",
+        ".write" => "auth != null"
+    ]
+];
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////
+regras de acessos do firebase:
+regra restrita para acesso de notificação inclusive utilizada com o plugin:TrackerAlertSonore1
+{
+  "rules": {
+    "visitantes": {
+      ".read": "auth != null || true", // Permite leitura pública (você pode restringir se quiser depois)
+      ".write": "true", // Permite escrita por qualquer visitante
+
+      // Alternativamente, regras mais específicas por IP (opcional):
+      "$pushId": {
+        ".validate": "newData.hasChildren(['ip', 'nome', 'location', 'timestamp'])",
+        "timestamp": {
+          ".validate": "newData.val() <= now + 60000" // até 1 minuto no futuro
+        }
+      }
+    }
+  }
+}
+
+
+regra para acesso livre (utilizadas mais para testes de realtime):
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+
+
+
+// Libera acesso total
+aplyRulesFirebase($credentialsJson, $regrasLiberadas);
+
+// Restringe para usuários autenticados
+// aplyRulesFirebase($credentialsJson, $regrasRestritas);
+
+
+
+////////////////////com javascript:
+async function aplyRulesFirebase(credentials, rulesJson) {
+  const admin = require("firebase-admin");
+
+  // Verifica se o Firebase já está inicializado
+  if (admin.apps.length === 0) {
+    admin.initializeApp({
+      credential: admin.credential.cert(credentials),
+      databaseURL: `https://${credentials.project_id}.firebaseio.com`
+    });
+  }
+
+  try {
+    await admin.database().setRules(rulesJson);
+    console.log("Regras aplicadas com sucesso!");
+  } catch (error) {
+    console.error("Erro ao aplicar regras:", error);
+  }
+}
+
+
+
+
+/*Exemplo de uso da função aplyRulesFirebase
+const credentials = require("./meu-arquivo-de-chave.json"); // chave da conta de serviço
+
+const regrasLiberadas = {
+  rules: {
+    ".read": true,
+    ".write": true
+  }
+};
+
+const regrasRestritas = {
+  rules: {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+};
+
+aplyRulesFirebase(credentials, regrasLiberadas);  // Libera acesso
+// ou
+aplyRulesFirebase(credentials, regrasRestritas);  // Restringe acesso com login
+*/
