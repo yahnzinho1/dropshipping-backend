@@ -22,16 +22,16 @@ $_SERVER['HTTPS'] = 'on';
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'sql10778673' );
+define( 'DB_NAME', 'data_postgres' );
 
 /** Database username */
-define( 'DB_USER', 'sql10778673' );
+define( 'DB_USER', 'data_postgres_user' );
 
 /** Database password */
-define( 'DB_PASSWORD', 'lvUStvrnpf' );
+define( 'DB_PASSWORD', '2dmKGB1FZTPasG7E1qo2g6DsWH0eNWxC' );
 
 /** Database hostname */
-define( 'DB_HOST', 'sql10.freesqldatabase.com' );
+define( 'DB_HOST', 'dpg-d0hmcl3e5dus73b63nd0-a' );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET', 'utf8mb4' );
